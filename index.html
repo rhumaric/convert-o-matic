@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+	<head>
+    <title>Convert'o'matic</title>
+    <link rel="stylesheet" href="css/style.css" media="screen" />
+</head>
+  <body>
+    <form>
+      <div class="errors" ></div>
+      <input id="x" type="text" value="0" autofocus />,<input id="y" type="text" value="0" />
+      <select id="sourceProj">
+        <option>Select a projection</option>
+      </select>
+      <select id="destProj">
+        <option>Select a projection</option>
+      </select>
+      <button id="convert">Convert</button>
+    </form>
+    <output></output>
+  <script src="js/jquery-1.6.2.min.js"></script>
+  <script src="js/proj4js-compressed.js"></script>
+  <script>
+    (function(){
+
+      
+      function fillProjections(){
+
+
+        var options = [];
+        for (var def in Proj4js.defs){
+
+          var proj = new Proj4js.Proj(def);
+          var option = document.createElement('option');
+          option.value = proj.srsCode;
+          option.innerHTML = proj.srsCode + (proj.title ? ' - '+proj.title : '');
+          $(option).data('projection',proj);
+          options.push(option);
+        }
+
+        $('#sourceProj').append(options);
+        $('[value="EPSG:4326"]',$('#sourceProj')).attr('selected','selected');
+        $('#destProj').append($(options).clone(true,true));
+        $('[value="EPSG:900913"]',$('#destProj')).attr('selected','selected');
+      }
+
+      function onSubmit(event){
+
+        event.preventDefault();
+
+        if(!validateCoordinate($('#x').val()) || !validateCoordinate($('#y').val())){
+
+          return;
+        }
+
+        var source = $('option:selected',$('#sourceProj')).data('projection');
+        var destination = $('option:selected',$('#destProj')).data('projection');
+        var point = new Proj4js.Point(1*$('#x').val(),1*$('#y').val());
+
+        $('output').text(Proj4js.transform(source,destination,point).toShortString());
+
+      }
+
+      /**
+       * Validate that given coordinate is a number
+       */
+      function validateCoordinate(coordinate){
+
+        if(isNaN(parseFloat(coordinate))){
+
+          $('.errors').text("Uh oh ! Doesn't look like a coordinate, does it ?");
+          return false;
+        }
+        else{
+
+          $('.errors').text('');
+          return true;
+        }
+      }
+
+      function onPaste(event){
+
+        if(event.clipboardData){
+
+          event.preventDefault();
+
+          var content = event.clipboardData.getData('text/plain');
+          var tokens = content.split(',');
+
+          if(!validateCoordinate(tokens[0])){
+
+            return;
+          }
+
+          if(tokens.length > 1){
+            if(!validateCoordinate(tokens[1])){
+
+              return;
+            }
+            $('#y').val(tokens[1]);
+          }
+          
+          $('#x').val(tokens[0]);
+        }
+      }
+      
+      $(function(){
+
+        // Fill the select with available projections
+        fillProjections();
+
+        // Handle form submission
+        $('form').submit(onSubmit);
+
+        // Set focus to the first field for faster input
+        if(!("autofocus" in document.createElement("input"))){
+          $('#x').focus();
+        }
+
+        // Enable pasting whole coordinates in the first field
+        // To extract them to both fields
+        document.onpaste=onPaste;
+      });
+    })();
+  </script>
+</body>
+</html>

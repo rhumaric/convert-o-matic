@@ -1,0 +1,15 @@
+body{
+
+  font-family: sans-serif;
+}
+
+output{
+
+  display:block;
+}
+
+
+select{
+
+  display: block;
+}
