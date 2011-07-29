@@ -4,19 +4,34 @@
     <title>Convert'o'matic</title>
     <link rel="stylesheet" href="css/style.css" media="screen" />
 </head>
-  <body>
+<body>
+    <h1><img src="images/logo.png" alt="Convert'o'matic"/></h1>
     <form>
       <div class="errors" ></div>
+      <fieldset id="source">
       <input id="x" type="text" value="0" autofocus />,<input id="y" type="text" value="0" />
       <select id="sourceProj">
         <option>Select a projection</option>
       </select>
+    </fieldset>
+    <fieldset id="dest">
       <select id="destProj">
         <option>Select a projection</option>
       </select>
-      <button id="convert">Convert</button>
+    </fieldset>
+    <button id="convert">Convert</button>
     </form>
     <output></output>
+    <footer>
+    <p class="about">
+      This project was all about providing a fun(ny) tool to convert coordinates between different geographic coordinate system.
+      I had great fun building and designing it and just hope it'll prove usefull.
+    </p>
+    <p class="about">
+    It uses Proj4js for coordinate transforms and a little jQuery, mostly for selecting elements and some attributes manipulation. Code is open (LGPL licence), everything is on <a href="https://github.com/rhumaric/convert-o-matic">Github</a>. 
+    </p>
+      <p>Dev & design by <a href="http://rhumaric.com">@rhumaric</a> - <a href="http://twitter.com/rhumaric">twitter</a> - <a href="http://github.com/rhumaric">Github</a></p>
+    </footer>
   <script src="js/jquery-1.6.2.min.js"></script>
   <script src="js/proj4js-compressed.js"></script>
   <script>
@@ -104,6 +119,13 @@
       }
       
       $(function(){
+
+        // Define available projections
+        Proj4js.defs = {
+          "EPSG:4326":"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+          "EPSG:2154":"+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
+          "EPSG:900913":"+title=GoogleMercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs"
+        }
 
         // Fill the select with available projections
         fillProjections();

@@ -1,15 +1,158 @@
 body{
 
-  font-family: sans-serif;
+  font-family: "ChunkFive";
+  line-height: 1.5;
+  font-size: 16px;
+  background: #fafafa url('../images/background.jpg');
 }
+
+body>*{
+
+  width: 510px;
+  margin: auto;
+}
+
+a{
+
+  color: #0071BC;
+}
+
+a:active{
+
+    position: relative;
+    top: 1px;
+}
+
+
+h1{
+
+  text-align: center;
+}
+
+form{
+
+  text-align: center;
+}
+
+input{
+
+  background: transparent;
+  border: solid 2px #333;
+  border-radius: 2px;
+  font-family: "ChunkFive";
+  font-size: 16px;
+  line-height: 1.5;
+  height: 22px;
+  width: 190px;
+}
+
+#x{
+
+  text-align: right;
+  padding-right: 5px;
+  margin-right: 10px;
+}
+
+#y{
+
+  text-align: left;
+  padding-left: 5px;
+  margin-left: 10px;
+}
+
+form{
+
+  position: relative;
+  height: 346px;
+  background: url('../images/form.png');
+
+}
+
+select{
+
+  margin-top: 24px;
+  display:block;
+  background: #f0f0f0;
+  font-family: "ChunkFive";
+  line-height: 24px;
+  height:24px;
+  font-size: 16px;
+  width: 100%;
+}
+
+fieldset{
+
+  border: none;
+  padding: 0;
+  height: 92px;
+  width: 427px;
+  margin: 0 auto;
+}
+
+#source{
+
+  padding-top: 48px;
+}
+
+#dest{
+
+  margin-top: 124px;
+}
+
+#convert{
+
+  position: absolute;
+  top: 160px;
+  left: 165px;
+  width: 170px;
+  height: 115px;
+  background: url('../images/convert.png');
+  border: none;
+  text-indent: -99999px;
+  z-index: 5;
+  cursor: pointer;
+}
+
 
 output{
 
   display:block;
+  border: solid 2px #333;
+  border-radius: 2px;
+  font-size: 21px;
+  line-height: 44px;
+  text-align: center;
+  min-height: 44px;
 }
 
+.errors{
 
-select{
+  text-indent: -99999px;
+  background: url('../images/error.png') top center no-repeat;
+  position: absolute;
+  width: 100%;
+  top: 12px;
+}
+
+#config-link{
 
   display: block;
+  position: absolute;
+  width: 135px;
+  height: 105px;
+  top: 157px;
+  right: -60px;
+  background: url('../images/missing.png');
+  text-indent: -99999px;
 }
+
+
+footer{
+  margin-top: 24px;
+  color: #999999;
+}
+
+::-webkit-selection{      background: #0071BC; color: #e6e6e6; text-shadow: none; }
+::-moz-selection{     background: #0071BC; color: #e6e6e6; text-shadow: none; }
+::selection {     background: #0071BC; color: #e6e6e6; text-shadow: none; }
+
